@@ -1,0 +1,45 @@
+import { Component } from '@angular/core';
+import { CategoryService } from 'shared/services/category.service';
+import { ProductService } from 'shared/services/product.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import 'rxjs/add/operator/take';
+
+@Component({
+  selector: 'app-product-form',
+  templateUrl: './product-form.component.html',
+  styleUrls: ['./product-form.component.css']
+})
+export class ProductFormComponent {
+  categories$;
+  product: any = {};
+  id;
+  constructor(
+    private categoryService: CategoryService,
+    private productService: ProductService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+    this.categories$ = categoryService.getAll();
+    this.id = route.snapshot.paramMap.get('id');
+    if (this.id) {
+      productService.get(this.id).take(1).subscribe(product => this.product = product);
+    }
+  }
+
+  save(product) {
+    if (this.id) {
+      this.productService.update(this.id, this.product);
+    }else {
+      this.productService.create(product);
+    }
+    this.router.navigate(['/admin/products']);
+  }
+
+  delete() {
+    if (!confirm('Are you want to delete this product?')) {
+      return;
+    }
+    this.productService.delete(this.id);
+    this.router.navigate(['/admin/products']);
+  }
+}

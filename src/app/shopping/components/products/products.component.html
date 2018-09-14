@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-3">
+    <product-filter [category]="category"></product-filter>
+  </div>
+  <div class="col" *ngIf="cart$ | async as cart">
+    <div class="row">
+      <ng-container *ngFor="let product of filteredProducts; let i = index">
+        <div class="col">
+          <product-card [product]="product" [shopping-cart]="cart"></product-card>
+        </div>
+        <div class="w-100" *ngIf="(i + 1) % 2 === 0"></div>
+      </ng-container>
+    </div>
+  </div>
+</div>
