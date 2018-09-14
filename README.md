@@ -1,6 +1,8 @@
 # Oshop
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.10.
+and you can view the final project in firebase using this url:
+https://oshop-69275.firebaseapp.com/
 
 ## Development server
 
